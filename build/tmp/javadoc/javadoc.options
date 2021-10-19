@@ -1,0 +1,10 @@
+-classpath 'C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\build\\classes\\java\\main;C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\build\\resources\\main'
+-d 'C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\build\\docs\\javadoc'
+-doctitle 'ED-FP-2-4 1.0-SNAPSHOT API'
+-notimestamp 
+-quiet 
+-windowtitle 'ED-FP-2-4 1.0-SNAPSHOT API'
+'C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\src\\main\\java\\edu\\demo\\Demo.java'
+'C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\src\\main\\java\\edu\\exceptions\\EmptyListException.java'
+'C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\src\\main\\java\\edu\\implementation\\DoublyLinkedList.java'
+'C:\\Users\\ribei\\Desktop\\Nuno\\ESTG\\2 Ano\\1 Semestre\\ED\\Fichas\\Ficha 2\\ED-FP-2-4\\src\\main\\java\\edu\\implementation\\Person.java'
