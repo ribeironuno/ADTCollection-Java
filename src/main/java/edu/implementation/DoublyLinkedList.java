@@ -263,6 +263,27 @@ public class DoublyLinkedList<T> {
     }
 
     /**
+     * Retorna uma lista de inteiros pares, caso estes existam na instância.
+     *
+     * @return Lista de inteiros pares caso existam, ou retorno null caso contrário.
+     */
+    @SuppressWarnings("unchecked")
+    public DoublyLinkedList<Integer> getDoublyLinkedList() {
+        if (this.head != null && this.head.data instanceof Integer) { //Verifica se a lista está vazia e se o elemento que a lista guarda é instancia de Integer.
+            DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+            Node<Integer> node = (Node<Integer>) this.head;
+            while (node != null) {
+                if (node.data % 2 == 0) {
+                    list.addLast(node.data);
+                }
+                node = node.next;
+            }
+            return list;
+        }
+        return null;
+    }
+
+    /**
      * Imprime todos os elementos da lista.
      */
     public void print() {

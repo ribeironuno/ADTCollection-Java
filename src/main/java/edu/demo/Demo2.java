@@ -15,6 +15,9 @@ public class Demo2 {
         Person p4 = new Person("DDD");
 
         DoublyLinkedList<Person> list = new DoublyLinkedList<>();
+        DoublyLinkedList<Integer> list1 = new DoublyLinkedList<>();
+        list1.addFirst(2);
+        list1.getDoublyLinkedList();
 
         list.addFirst(p1);
         list.addLast(p2);
