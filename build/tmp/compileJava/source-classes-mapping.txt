@@ -1,3 +1,7 @@
+edu/implementation/Person.java
+ edu.implementation.Person
+edu/exceptions/EmptyListException.java
+ edu.exceptions.EmptyListException
 edu/demo/Demo2.java
  edu.demo.Demo2
 edu/implementation/DoublyLinkedList.java
@@ -7,7 +11,3 @@ edu/demo/Demo1.java
  edu.demo.Demo1
 edu/demo/Demo3.java
  edu.demo.Demo3
-edu/exceptions/EmptyListException.java
- edu.exceptions.EmptyListException
-edu/implementation/Person.java
- edu.implementation.Person

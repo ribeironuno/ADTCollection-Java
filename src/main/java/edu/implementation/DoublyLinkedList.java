@@ -162,14 +162,14 @@ public class DoublyLinkedList<T> {
     }
 
     /**
-     * Remove um elemento da lista
+     * Remove um elemento da lista.
      *
      * @param elem Elemento a ser eliminado
      * @return Retorno false caso não seja encontrado o elemento na lista, retorno true caso contrário.
      */
     public boolean remove(T elem) {
         boolean flag = false;
-        if (this.size != 0 && elem != null) {
+        if (this.size != 0 && elem != null) { //Caso a lista esteja vazia
             if (this.head.data.equals(elem)) { //Caso o node a ser eliminado seja o node head
                 this.removeFirst();
                 flag = true;
@@ -177,18 +177,27 @@ public class DoublyLinkedList<T> {
                 this.removeLast();
                 flag = true;
             } else {
-                Node<T> node = this.head;
-                while (!flag && node.next != null) { //Percorre a lista toda, pára no node null ou quando for encontrado o node
-                    if (node.next.data.equals(elem)) { //Caso o node apontado seja igual
-                        node.next = node.next.next;
+                Node<T> current = this.head;
+                while (!flag && current.next != null) { //Percorre a lista toda, pára no node null ou quando for encontrado o node
+                    if (current.next.data.equals(elem)) { //Caso o node apontado seja igual
+                        current.next = current.next.next;
                         flag = true;
                         this.size--;
                     }
-                    node = node.next; //Atualiza o node, para percorrer a lista
+                    current = current.next; //Atualiza o node, para percorrer a lista
                 }
             }
         }
         return flag;
+    }
+
+    /**
+     *
+     * @param node
+     */
+    private void removeNode(Node<T> node){
+        node.prev.next = node.next;
+        node.next.prev =  node;
     }
 
     /**
@@ -217,12 +226,12 @@ public class DoublyLinkedList<T> {
             int arrayCount = 0;
             int actualPos = 0;
 
-            Node<T> node = this.head;
-            while (node != null) {
+            Node<T> current = this.head;
+            while (current != null) {
                 if (actualPos >= firstPos && actualPos <= lastPos) {
-                    arr[arrayCount++] = node.data;
+                    arr[arrayCount++] = current.data;
                 }
-                node = node.next;
+                current = current.next;
                 actualPos++;
             }
             return Arrays.copyOfRange(arr, 0, arrayCount);
@@ -271,16 +280,44 @@ public class DoublyLinkedList<T> {
     public DoublyLinkedList<Integer> getDoublyLinkedList() {
         if (this.head != null && this.head.data instanceof Integer) { //Verifica se a lista está vazia e se o elemento que a lista guarda é instancia de Integer.
             DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-            Node<Integer> node = (Node<Integer>) this.head;
-            while (node != null) {
-                if (node.data % 2 == 0) {
-                    list.addLast(node.data);
+            Node<Integer> current = (Node<Integer>) this.head;
+            while (current != null) {
+                if (current.data % 2 == 0) {
+                    list.addLast(current.data);
                 }
-                node = node.next;
+                current = current.next;
             }
             return list;
         }
         return null;
+    }
+
+    /**
+     * Permite saber quantos elementos iguais existem e remove esses mesmos da lista
+     *
+     * @param elem Elemento a ser comparado com os elementos da lista.
+     * @return Retorno > 0 caso tenha havido alterações, retorno 0 caso não tenha havio alterações.
+     */
+    public int howManyOf(T elem) {
+        int count = 0;
+        Node<T> current = this.head;
+        while (current != null) {
+            if (current.data.equals(elem)) {
+                if (current.equals(this.head)) { //Caso seja o node head
+                    this.removeFirst();
+                    count++;
+                } else if (current.equals(this.tail)) { //Caso seja o node tail
+                    this.removeLast();
+                    count++;
+                } else {
+                    current.prev.next = current.next;
+                    current.next = current.prev;
+                    count++;
+                }
+                current = current.next;
+            }
+        }
+        return count;
     }
 
     /**
@@ -290,10 +327,10 @@ public class DoublyLinkedList<T> {
         if (this.size == 0) {
             System.out.println("The list is empty");
         } else {
-            Node<T> node = this.head;
-            while (node != null) {
-                System.out.println(node.data.toString());
-                node = node.next;
+            Node<T> current = this.head;
+            while (current != null) {
+                System.out.println(current.data.toString());
+                current = current.next;
             }
         }
     }
