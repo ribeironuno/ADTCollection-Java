@@ -4,7 +4,7 @@ import collections.implementation.MyLinkedList;
 
 import java.util.NoSuchElementException;
 
-public class Demo1 {
+public class DemoLinkedList {
 
     public static void main(String[] args) {
         try {
