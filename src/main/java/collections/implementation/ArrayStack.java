@@ -80,7 +80,7 @@ public class ArrayStack<T> implements IStack<T> {
         if (this.isEmpty())
             throw new EmptyStackException();
 
-        return this.stack[top];
+        return this.stack[top - 1];
     }
 
     @Override
