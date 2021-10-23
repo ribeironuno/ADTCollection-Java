@@ -49,7 +49,7 @@ public class ArrayStack<T> implements IStack<T> {
      */
     @SuppressWarnings("unchecked")
     private void expandCapacity() {
-        T[] tmp = (T[]) (new Object[(int) (this.top * 1.5)]);
+        T[] tmp = (T[]) (new Object[this.top * 2]);
         for (int i = 0; i < this.top; i++) {
             tmp[i] = this.stack[i];
         }
