@@ -1,5 +1,6 @@
 package collections.interfaces;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
@@ -24,6 +25,15 @@ public interface IList<T> {
      * @throws NoSuchElementException É lançado uma exceção caso a lista esteja vazia.
      */
     public boolean remove(T elem) throws NoSuchElementException;
+
+    /**
+     * Retorna um elemento da lista.
+     * @param index Posição a retornar.
+     * @return Elemento pretendido.
+     * @throws IndexOutOfBoundsException Caso o index não seja válido.
+     * @throws EmptyStackException Caso a lista esteja vazia
+     */
+    public T get(int index) throws IndexOutOfBoundsException, EmptyStackException;
 
     /**
      * Retorna o tamanho da lista.
