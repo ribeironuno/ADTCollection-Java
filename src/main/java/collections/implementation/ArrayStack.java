@@ -58,7 +58,7 @@ public class ArrayStack<T> implements IStack<T> {
 
     @Override
     public void push(T element) {
-        if (this.size() == top)
+        if (this.stack.length == top)
             this.expandCapacity();
 
         this.stack[top++] = element;
@@ -91,5 +91,15 @@ public class ArrayStack<T> implements IStack<T> {
     @Override
     public int size() {
         return this.top;
+    }
+
+    @Override
+    public String toString() {
+        String string = "";
+
+        for (int i = 0; i < this.top; i++) {
+            string += "Element n" + i + ": " + this.stack[i].toString() + "\n";
+        }
+        return string;
     }
 }
