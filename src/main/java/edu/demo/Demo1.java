@@ -1,33 +1,38 @@
 package edu.demo;
 
-import edu.implementation.*;
+import collections.implementation.MyLinkedList;
+
+import java.util.NoSuchElementException;
 
 public class Demo1 {
 
     public static void main(String[] args) {
+        try {
+            MyLinkedList<Integer> list = new MyLinkedList<>();
 
-        Person p1 = new Person("AAA");
-        Person p2 = new Person("BBB");
-        Person p3 = new Person("CCC");
-        Person p4 = new Person("DDD");
+            list.add(null);
+            list.add(2);
+            list.add(10);
+            list.add(7);
+            list.add(6);
+            list.add(4);
+            list.add(3);
+            System.out.println(list.toString());
 
-        DoublyLinkedList<Person> list = new DoublyLinkedList<>();
+            System.out.println("--------");
 
-        list.addLast(p1);
-        list.addLast(p2);
-        list.addLast(p3);
-        list.addLast(p4);
+            list.remove(2);
+            list.remove(7);
+            list.remove(6);
+            list.remove(4);
+            list.remove(3);
+            list.remove(10);
+            list.remove(null);
+            System.out.println(list.toString());
 
-        list.print();
-
-        list.removeLast();
-        list.removeFirst();
-        list.removeFirst();
-        list.removeFirst();
-
-        System.out.println("--------");
-
-        list.print();
+        } catch (NoSuchElementException | NullPointerException ex) {
+            System.out.println(ex.toString());
+        }
     }
 
 }

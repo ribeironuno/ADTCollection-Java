@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TestLinkedList" tests="2" skipped="0" failures="0" errors="0" timestamp="2021-10-23T10:24:51" hostname="LAPTOP-6BL60HFP" time="0.052">
+  <properties/>
+  <testcase name="Testa a exceÃ§Ã£o da lista vazia" classname="TestLinkedList" time="0.045"/>
+  <testcase name="testAddElement()" classname="TestLinkedList" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

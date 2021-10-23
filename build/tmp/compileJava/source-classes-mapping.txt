@@ -1,13 +1,12 @@
-edu/implementation/Person.java
- edu.implementation.Person
-edu/exceptions/EmptyListException.java
- edu.exceptions.EmptyListException
-edu/demo/Demo2.java
- edu.demo.Demo2
-edu/implementation/DoublyLinkedList.java
- edu.implementation.DoublyLinkedList
- edu.implementation.DoublyLinkedList$Node
+collections/implementation/Node.java
+ collections.implementation.Node
+collections/implementation/NodeDouble.java
+ collections.implementation.NodeDouble
+collections/implementation/MyLinkedList.java
+ collections.implementation.MyLinkedList
+collections/implementation/DoublyLinkedList.java
+ collections.implementation.DoublyLinkedList
+collections/interfaces/IList.java
+ collections.interfaces.IList
 edu/demo/Demo1.java
  edu.demo.Demo1
-edu/demo/Demo3.java
- edu.demo.Demo3
