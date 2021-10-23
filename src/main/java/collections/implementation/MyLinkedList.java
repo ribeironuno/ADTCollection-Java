@@ -2,6 +2,7 @@ package collections.implementation;
 
 import collections.interfaces.IList;
 
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
@@ -46,8 +47,8 @@ public class MyLinkedList<T> implements IList<T> {
     }
 
     @Override
-    public void add(T elem) throws NullPointerException{
-        if(elem == null)
+    public void add(T elem) throws NullPointerException {
+        if (elem == null)
             throw new NullPointerException("Linked list does not support null elements");
 
         if (this.head == null) { //Verifica se a lista está vazia e coloca no node head
@@ -93,6 +94,21 @@ public class MyLinkedList<T> implements IList<T> {
             }
         }
         return false;
+    }
+
+    @Override
+    public T get(int index) throws IndexOutOfBoundsException, EmptyStackException {
+        if (this.isEmpty())
+            throw new EmptyStackException();
+
+        if (index < 0 || index > this.size - 1)
+            throw new IndexOutOfBoundsException("Index invalid");
+
+        Node<T> current = this.head;
+        for (int i = 0; i < index; i++) {
+            current = current.getNext();
+        }
+        return current.getData();
     }
 
     @Override
