@@ -5,31 +5,31 @@ import collections.interfaces.IStack;
 import java.util.EmptyStackException;
 
 /**
- * Classe que implementa o contrato para uma Stack, com uso a array.
+ * Class that implements stack contract
  *
- * @param <T> Tipo a ser guardado pela stack
+ * @param <T> Type being stored
  */
 public class ArrayStack<T> implements IStack<T> {
 
     /**
-     * Valor por defeito para a capacidade inicial da stack
+     * Default value for array
      */
     private static final int DEFAULT_CAPACITY = 100;
 
     /**
-     * Topo da stack;
+     * Top of stack
      */
     private int top;
 
     /**
-     * Stack de elementos.
+     * Collection of stack
      */
     private T[] stack;
 
     /**
-     * Cria uma stack com o valor inicial recebido.
+     * Creates an array stack
      *
-     * @param initialCapacity Valor a capacidade.
+     * @param initialCapacity Value for array.
      */
     @SuppressWarnings("unchecked")
     public ArrayStack(int initialCapacity) {
@@ -38,14 +38,22 @@ public class ArrayStack<T> implements IStack<T> {
     }
 
     /**
-     * Cria uma stack com a capacidade definido por defeito.
+     * Creates an array stack with default value capacity
      */
     public ArrayStack() {
         this(DEFAULT_CAPACITY);
     }
 
+    /**
+     * "Expands" the array in 1.5 times
+     */
+    @SuppressWarnings("unchecked")
     private void expandCapacity() {
-        //TODO
+        T[] tmp = (T[]) (new Object[(int) (this.top * 1.5)]);
+        for (int i = 0; i < this.top; i++) {
+            tmp[i] = this.stack[i];
+        }
+        this.stack = tmp;
     }
 
     @Override
