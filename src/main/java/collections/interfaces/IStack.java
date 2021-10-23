@@ -1,5 +1,7 @@
 package collections.interfaces;
 
+import java.util.EmptyStackException;
+
 public interface IStack<T> {
 
     /**
@@ -13,15 +15,17 @@ public interface IStack<T> {
      * Removes and returns the top element from this stack.
      *
      * @return T element removed from the top of the stack
+     * @throws EmptyStackException If the stack is empty
      */
-    public T pop();
+    public T pop() throws EmptyStackException;
 
     /**
      * Returns without removing the top element of this stack.
      *
      * @return T element on top of the stack
+     * @throws EmptyStackException If the stack is empty
      */
-    public T peek();
+    public T peek() throws EmptyStackException;
 
     /**
      * Returns true if this stack contains no elements.
