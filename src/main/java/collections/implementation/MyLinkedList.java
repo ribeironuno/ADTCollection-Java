@@ -46,12 +46,25 @@ public class MyLinkedList<T> implements IList<T> {
         this.size++;
     }
 
+    /**
+     * Adiciona um elemeno no inicio da lista.
+     * @param elem Elemento a ser adicionado
+     */
+    public void addFirst(T elem) {
+        if (this.isEmpty()) {
+            this.head = this.tail = new Node<T>(elem);
+            this.size++;
+        } else {
+            this.head = new Node<>(this.head, elem);
+        }
+    }
+
     @Override
     public void add(T elem) throws NullPointerException {
         if (elem == null)
             throw new NullPointerException("Linked list does not support null elements");
 
-        if (this.head == null) { //Verifica se a lista está vazia e coloca no node head
+        if (this.isEmpty()) { //Verifica se a lista está vazia e coloca no node head
             this.head = this.tail = new Node<T>(elem);
             this.size++;
         } else { //Caso a lista não esteja limpa, o node é inserido no fim
