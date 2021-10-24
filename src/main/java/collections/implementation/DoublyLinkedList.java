@@ -3,6 +3,7 @@ package collections.implementation;
 import collections.interfaces.IList;
 
 import java.util.Arrays;
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
@@ -178,6 +179,21 @@ public class DoublyLinkedList<T> implements IList<T> {
             }
         }
         return flag;
+    }
+
+    @Override
+    public T get(int index) throws IndexOutOfBoundsException, EmptyStackException {
+        if (this.isEmpty())
+            throw new EmptyStackException();
+
+        if (index < 0 || index > this.size)
+            throw new IndexOutOfBoundsException("Index invalid");
+
+        NodeDouble<T> current = this.head;
+        for (int i = 0; i <= index; i++) {
+            current = current.getNext();
+        }
+        return current.getData();
     }
 
     @Override
