@@ -37,7 +37,7 @@ public class LinkedStack<T> implements IStack<T> {
         if (this.isEmpty())
             throw new EmptyStackException();
 
-        return this.list.get(this.list.size() - 1);
+        return this.list.get(0);
     }
 
     @Override
