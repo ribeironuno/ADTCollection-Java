@@ -48,15 +48,16 @@ public class MyLinkedList<T> implements IList<T> {
 
     /**
      * Adiciona um elemeno no inicio da lista.
+     *
      * @param elem Elemento a ser adicionado
      */
     public void addFirst(T elem) {
         if (this.isEmpty()) {
             this.head = this.tail = new Node<T>(elem);
-            this.size++;
         } else {
             this.head = new Node<>(this.head, elem);
         }
+        this.size++;
     }
 
     @Override
