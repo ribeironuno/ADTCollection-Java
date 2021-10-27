@@ -21,10 +21,9 @@ public interface IList<T> {
      * Method to remove an element.
      *
      * @param elem Element being removed.
-     * @return True case removed operation occurred, False otherwise.
      * @throws NoSuchElementException Throws an exceptions if list is empty.
      */
-    public boolean remove(T elem) throws NoSuchElementException;
+    public void remove(T elem) throws NoSuchElementException;
 
     /**
      * Returns the head element.
