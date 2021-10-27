@@ -7,24 +7,24 @@ import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
- * Classe que irá funcionar como uma LinkedList duplamente ligada.
+ * Class that implement a doubly linked list.
  *
- * @param <T> Tipo a ser armazenado pelos nodes da LinkedList.
+ * @param <T> Type being stored.
  */
 public class DoublyLinkedList<T> implements IList<T> {
 
     /**
-     * Primeiro node da lista.
+     * Head node, most recently added node.
      */
     private NodeDouble<T> head;
 
     /**
-     * ùltimo node da lista.
+     * Tail node, the oldest node.
      */
     private NodeDouble<T> tail;
 
     /**
-     * Tamanho da lista.
+     * Size of list.
      */
     private int size;
 
@@ -33,71 +33,23 @@ public class DoublyLinkedList<T> implements IList<T> {
         this.size = 0;
     }
 
-    /**
-     * Adiciona um elemento à lista.
-     *
-     * @param elem Elemento a ser adicionado.
-     */
     @Override
     public void add(T elem) {
-        this.addLast(elem);
-    }
-
-    /**
-     * Adiciona o primeiro elemento da lista.
-     *
-     * @param elem Informação a ser guardada.
-     */
-    private void addInEmptyList(T elem) {
-        this.head = this.tail = new NodeDouble<T>(elem);
+        if (this.size == 0) {
+            this.head = this.tail = new NodeDouble<T>(elem);
+        } else {
+            NodeDouble<T> newNode = new NodeDouble<>(this.head, null, elem);
+            this.head.setPrev(newNode);
+            this.head = newNode;
+        }
         this.size++;
     }
 
-    /**
-     * Adiciona um elemento ao fim da lista.
-     *
-     * @param elem Elemento a ser adicionado.
-     */
-    public void addLast(T elem) {
-        if (this.size == 0) { //Caso a lista esteja vazia
-            this.addInEmptyList(elem);
-        } else {
-            NodeDouble<T> newNode = new NodeDouble<>(null, this.tail, elem); //Criamos o node em que o prox aponta para null e o prev aponta para a tail atual
-            this.tail.setNext(newNode); //A tail aponta para o novo node
-            this.tail = newNode; //A tail passa a ser o node criado
-            this.size++;
-        }
-    }
-
-    /**
-     * Adiciona um elemento no inicio da lista.
-     *
-     * @param elem Elemento a ser adicionado.
-     */
-    public void addFirst(T elem) {
-        if (this.size == 0) { //Caso a lista esteja vazia
-            this.addInEmptyList(elem);
-        } else {
-            NodeDouble<T> newNode = new NodeDouble<>(this.head, null, elem); //Cria um novo node onde o next é a head atual e o prev é null
-            this.head.setPrev(newNode); //O prev da atual head aponta para o novo node
-            this.head = newNode; //A head é atualizada para o novo node
-            this.size++;
-        }
-    }
-
-    /**
-     * Verifica se a lista está vazia.
-     *
-     * @return Retorna true caso a lista esteja vazia, false caso contrário.
-     */
     @Override
     public boolean isEmpty() {
         return this.size == 0;
     }
 
-    /**
-     * Limpa a lista.
-     */
     @Override
     public void clear() {
         this.head = this.tail = null;
@@ -105,30 +57,32 @@ public class DoublyLinkedList<T> implements IList<T> {
     }
 
     /**
-     * Remove o primeiro elemento da lista.
+     * Remove the most recently added element.
      *
-     * @throws NoSuchElementException Lança a exceção caso a lista esteja vazia.
+     * @throws NoSuchElementException Throws an exception if there is no element.
      */
     public void removeFirst() throws NoSuchElementException {
-        if (this.size == 0) {
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Empty list");
-        } else if (this.size == 1) { //Caso haja apenas um elemento, limpa a lista.
+        } else if (this.size == 1) {
             this.clear();
         } else {
-            this.head = this.head.getNext(); //A head atual passa a ser o 2º node.
+            this.head = this.head.getNext();
             this.head.setPrev(null);
             this.size--;
         }
     }
 
     /**
-     * Remove o último elemento da lista.
+     * Remove the oldest element.
      *
-     * @throws NoSuchElementException Lança a exceção caso a lista esteja vazia.
+     * @throws NoSuchElementException Throws an exception if there is no element corresponding.
      */
     public void removeLast() throws NoSuchElementException {
-        if (this.size <= 1) { //Caso a lista esteja vazia ou tenha apenas um elemento.
-            this.removeFirst();
+        if (this.isEmpty()) {
+            throw new NoSuchElementException("Empty list");
+        } else if (this.size == 1) {
+            this.clear();
         } else {
             this.tail = this.tail.getPrev(); //A tail passa a ser o penultimo node.
             this.tail.setNext(null);
@@ -137,10 +91,10 @@ public class DoublyLinkedList<T> implements IList<T> {
     }
 
     /**
-     * Remove um nó que não é o node do inicio nem o nó do fim.
+     * Removes one node inside of borders, in other words, removes a node THAT IS NEITHER HEAD NOR TAIL
      *
-     * @param node Nó a remover.
-     * @implNote Node recebido não é o head nem o tail
+     * @param node Node to be removed.
+     * @implNote ELEMENT RECEIVED CANNOT BELONG TO A NODE THAT IS NEITHER HEAD NOR TAIL
      */
     private void removeNode(NodeDouble<T> node) {
         node.getPrev().setNext(node.getNext());
@@ -149,32 +103,32 @@ public class DoublyLinkedList<T> implements IList<T> {
     }
 
     /**
-     * Remove um elemento da lista caso este exista.
+     * Removes an element from list.
      *
-     * @param elem Elemento a ser eliminado
-     * @return Retorno false caso não seja encontrado o elemento na lista, retorno true caso contrário.
-     * @throws NoSuchElementException Lança exceção caso a lista esteja vazia.
+     * @param elem Element to be removed.
+     * @return False case element was not found, true if element was removed.
+     * @throws NoSuchElementException Throws an exception if list is empty.
      */
     public boolean remove(T elem) throws NoSuchElementException {
         boolean flag = false;
-        if (this.size == 0) {
+        if (this.isEmpty())
             throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
-        }
+
         if (elem != null) {
-            if (this.head.getData().equals(elem)) { //Caso o node a ser eliminado seja o node head
+            if (this.head.getData().equals(elem)) { //if is head node
                 this.removeFirst();
                 flag = true;
-            } else if (this.tail.getData().equals(elem)) { //Caso o node seja o node tail.
+            } else if (this.tail.getData().equals(elem)) { //if is tail node
                 this.removeLast();
                 flag = true;
             } else {
                 NodeDouble<T> current = this.head;
-                while (!flag && current.getNext() != null) { //Percorre a lista toda, pára quando o node apontado é null ou quando for encontrado o node.
-                    if (current.getNext().getData().equals(elem)) { //Caso o node apontado seja o node pretendido.
+                while (!flag && current.getNext() != null) {
+                    if (current.getNext().getData().equals(elem)) {
                         this.removeNode(current.getNext());
                         flag = true;
                     }
-                    current = current.getNext(); //Atualiza o node, para percorrer a lista
+                    current = current.getNext();
                 }
             }
         }
@@ -182,18 +136,11 @@ public class DoublyLinkedList<T> implements IList<T> {
     }
 
     @Override
-    public T get(int index) throws IndexOutOfBoundsException, EmptyStackException {
+    public T getHead() throws IndexOutOfBoundsException, EmptyStackException {
         if (this.isEmpty())
-            throw new EmptyStackException();
+            throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
 
-        if (index < 0 || index > this.size)
-            throw new IndexOutOfBoundsException("Index invalid");
-
-        NodeDouble<T> current = this.head;
-        for (int i = 0; i <= index; i++) {
-            current = current.getNext();
-        }
-        return current.getData();
+        return this.head.getData();
     }
 
     @Override
