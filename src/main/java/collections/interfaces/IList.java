@@ -4,53 +4,51 @@ import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
- * Contrato para a implementação de uma lista ligada.
+ * Contract for a list.
  *
- * @param <T> Tipo a ser armazenado pela lista.
+ * @param <T> Type being store by list.
  */
 public interface IList<T> {
     /**
-     * Adiciona um elemento à lista.
+     * Adds an element to list.
      *
-     * @param elem Elemento a ser adicionada.
-     * @throws NullPointerException Caso o elemento recebido seja null.
+     * @param elem Element being added.
+     * @throws NullPointerException Throws an exception in case the element is null.
      */
     public void add(T elem) throws NullPointerException;
 
     /**
-     * Método para remover um elemnto da lista.
+     * Method to remove an element.
      *
-     * @param elem Elemento a ser removido da lista.
-     * @return True caso o objeto tenha sido removido, False caso não tenha sido encontrado.
-     * @throws NoSuchElementException É lançado uma exceção caso a lista esteja vazia.
+     * @param elem Element being removed.
+     * @return True case removed operation occurred, False otherwise.
+     * @throws NoSuchElementException Throws an exceptions if list is empty.
      */
     public boolean remove(T elem) throws NoSuchElementException;
 
     /**
-     * Retorna um elemento da lista.
-     * @param index Posição a retornar.
-     * @return Elemento pretendido.
-     * @throws IndexOutOfBoundsException Caso o index não seja válido.
-     * @throws EmptyStackException Caso a lista esteja vazia
+     * Returns the head element.
+     * @return Head node.
+     * @throws EmptyStackException Throws an exceptions if list is empty.
      */
-    public T get(int index) throws IndexOutOfBoundsException, EmptyStackException;
+    public T getHead() throws EmptyStackException;
 
     /**
-     * Retorna o tamanho da lista.
+     * Says size of list.
      *
-     * @return Tamanho da lista.
+     * @return Size of list.
      */
     public int size();
 
     /**
-     * Método que diz se a lista está vazia.
+     * Checks if list is empty.
      *
-     * @return True em caso afirmativo, False caso contrário.
+     * @return True if is empty, false otherwise.
      */
     public boolean isEmpty();
 
     /**
-     * Método que limpa toda a lista.
+     * Clears list.
      */
     public void clear();
 }
