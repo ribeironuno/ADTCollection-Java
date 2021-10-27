@@ -6,58 +6,42 @@ import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
- * Classe que irá funcionar como uma lista ligada.
+ * Class that will implement contract of IList with focus on being a LINKED LIST.
  *
- * @param <T> Tipo a ser suportado pela lista.
+ * @param <T> Type being store in list.
  */
 public class MyLinkedList<T> implements IList<T> {
 
     /**
-     * Primeiro node.
+     * First node, most recently node added always.
      */
     private Node<T> head;
 
     /**
-     * Ultimo node.
-     */
-    private Node<T> tail;
-
-    /**
-     * Número atual de elementos na lista.
+     * Number of elements.
      */
     private int size;
 
     /**
-     * Cria uma instância de lista ligada.
+     * Creates an instance of linked list.
      */
     public MyLinkedList() {
-        this.head = this.tail = null;
+        this.head = null;
         this.size = 0;
     }
 
     /**
-     * Insere o elemento no fim.
+     * Add an element in last node.
+     * ---------CURRENTLY NOT USED---------
      *
-     * @param elem Elemento a ser inserido.
+     * @param elem Element to be added.
      */
     private void addLast(T elem) {
-        this.tail.setNext(new Node<T>(null, elem));
-        this.tail = this.tail.getNext();
-        this.size++;
-    }
-
-    /**
-     * Adiciona um elemeno no inicio da lista.
-     *
-     * @param elem Elemento a ser adicionado
-     */
-    public void addFirst(T elem) {
-        if (this.isEmpty()) {
-            this.head = this.tail = new Node<T>(elem);
-        } else {
-            this.head = new Node<>(this.head, elem);
+        Node<T> current = this.head;
+        while (current.getNext() != null) {
+            current = current.getNext();
         }
-        this.size++;
+        current.setNext(new Node<T>(null, elem));
     }
 
     @Override
@@ -65,18 +49,18 @@ public class MyLinkedList<T> implements IList<T> {
         if (elem == null)
             throw new NullPointerException("Linked list does not support null elements");
 
-        if (this.isEmpty()) { //Verifica se a lista está vazia e coloca no node head
-            this.head = this.tail = new Node<T>(elem);
-            this.size++;
-        } else { //Caso a lista não esteja limpa, o node é inserido no fim
-            this.addLast(elem);
+        if (this.isEmpty()) {
+            this.head = new Node<T>(elem);
+        } else {
+            this.head = new Node<>(this.head, elem);
         }
+        this.size++;
     }
 
     /**
-     * Remove o primeiro node.
+     * Removes head node.
      */
-    private void removeFirst() {
+    private void removeHead() {
         if (this.size == 1) {
             this.clear();
         } else {
@@ -87,16 +71,16 @@ public class MyLinkedList<T> implements IList<T> {
 
     @Override
     public boolean remove(T elem) throws NoSuchElementException {
-        if (this.size == 0) //Caso a lista esteja vazia
+        if (this.size == 0)
             throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
 
-        if (this.head.getData().equals(elem)) { //Caso o node seja o node head
-            this.removeFirst();
+        if (this.head.getData().equals(elem)) { //If is the head
+            this.removeHead();
         } else {
             Node<T> current = this.head;
-            while (current.getNext() != null) { //Percorre a lista toda
-                if (current.getNext().getData().equals(elem)) { //Caso o node apontado seja igual
-                    if (current.getNext().getNext() == null) { //Caso o node apontado seja o ultimo
+            while (current.getNext() != null) {
+                if (current.getNext().getData().equals(elem)) {
+                    if (current.getNext().getNext() == null) {
                         current.setNext(null);
                     } else {
                         current.setNext(current.getNext().getNext());
@@ -104,25 +88,18 @@ public class MyLinkedList<T> implements IList<T> {
                     this.size--;
                     return true;
                 }
-                current = current.getNext(); //Atualiza o node, para percorrer a lista
+                current = current.getNext();
             }
         }
         return false;
     }
 
     @Override
-    public T get(int index) throws IndexOutOfBoundsException, EmptyStackException {
+    public T getHead() throws IndexOutOfBoundsException, EmptyStackException {
         if (this.isEmpty())
             throw new EmptyStackException();
 
-        if (index < 0 || index > this.size - 1)
-            throw new IndexOutOfBoundsException("Index invalid");
-
-        Node<T> current = this.head;
-        for (int i = 0; i < index; i++) {
-            current = current.getNext();
-        }
-        return current.getData();
+        return this.head.getData();
     }
 
     @Override
