@@ -5,21 +5,29 @@ import collections.interfaces.IStack;
 import java.util.EmptyStackException;
 
 /**
- * Class that implements a stack with linked list.
+ * Class that implements a linked stack.
  *
  * @param <T> Type being storage.
  */
 public class LinkedStack<T> implements IStack<T> {
 
     /**
-     * Collection of elements.
+     * Top node.
      */
-    private final MyLinkedList<T> list = new MyLinkedList<>();
+    private Node<T> top;
+
+    private int size;
+
+    public LinkedStack() {
+        this.top = null;
+        this.size = 0;
+    }
 
 
     @Override
     public void push(T element) {
-        this.list.add(element);
+        top = new Node<>(top, element);
+        this.size++;
     }
 
     @Override
@@ -27,8 +35,9 @@ public class LinkedStack<T> implements IStack<T> {
         if (this.isEmpty())
             throw new EmptyStackException();
 
-        T result = this.list.get(this.list.size() - 1);
-        this.list.remove(result);
+        T result = this.top.getData();
+        top = top.getNext();
+        this.size--;
         return result;
     }
 
@@ -37,17 +46,17 @@ public class LinkedStack<T> implements IStack<T> {
         if (this.isEmpty())
             throw new EmptyStackException();
 
-        return this.list.get(0);
+        return this.top.getData();
     }
 
     @Override
     public boolean isEmpty() {
-        return this.list.isEmpty();
+        return this.size == 0;
     }
 
     @Override
     public int size() {
-        return this.list.size();
+        return this.size;
     }
 
     @Override
@@ -55,6 +64,12 @@ public class LinkedStack<T> implements IStack<T> {
         if (this.isEmpty())
             return "EMPTY LIST";
 
-        return "Stack : " + this.list.toString();
+        Node<T> current = this.top;
+        String string = "";
+        while (current != null) {
+            string += current.getData().toString() + " ";
+           current = current.getNext();
+        }
+        return string;
     }
 }
