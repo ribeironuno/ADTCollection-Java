@@ -78,7 +78,7 @@ public class LinkedQueue<T> implements QueueADT<T> {
     public String toString() {
         String string = "";
         if (this.isEmpty()) {
-            string = "Queue is empty";
+            string = "Queue is empty!";
         } else {
             Node<T> current = this.front;
             while (current != null) {
