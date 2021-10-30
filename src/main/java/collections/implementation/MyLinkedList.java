@@ -70,7 +70,7 @@ public class MyLinkedList<T> implements IList<T> {
     }
 
     @Override
-    public boolean remove(T elem) throws NoSuchElementException {
+    public boolean remove(T elem) throws EmptyStackException {
         if (this.size == 0)
             throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
 
@@ -92,14 +92,6 @@ public class MyLinkedList<T> implements IList<T> {
             }
         }
         return false;
-    }
-
-    @Override
-    public T getHead() throws IndexOutOfBoundsException, EmptyStackException {
-        if (this.isEmpty())
-            throw new EmptyStackException();
-
-        return this.head.getData();
     }
 
     @Override
