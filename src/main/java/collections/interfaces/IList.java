@@ -1,7 +1,6 @@
 package collections.interfaces;
 
 import java.util.EmptyStackException;
-import java.util.NoSuchElementException;
 
 /**
  * Contract for a list.
@@ -21,16 +20,9 @@ public interface IList<T> {
      * Method to remove an element.
      *
      * @param elem Element being removed.
-     * @throws NoSuchElementException Throws an exceptions if list is empty.
-     */
-    public void remove(T elem) throws NoSuchElementException;
-
-    /**
-     * Returns the head element.
-     * @return Head node.
      * @throws EmptyStackException Throws an exceptions if list is empty.
      */
-    public T getHead() throws EmptyStackException;
+    public boolean remove(T elem) throws EmptyStackException;
 
     /**
      * Says size of list.
