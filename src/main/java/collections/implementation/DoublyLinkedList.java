@@ -1,6 +1,6 @@
 package collections.implementation;
 
-import collections.interfaces.IList;
+import collections.interfaces.ListADT;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Type being stored.
  */
-public class DoublyLinkedList<T> implements IList<T> {
+public class DoublyLinkedList<T> implements ListADT<T> {
 
     /**
      * Head node, most recently added node.
@@ -133,14 +133,6 @@ public class DoublyLinkedList<T> implements IList<T> {
             }
         }
         return flag;
-    }
-
-    @Override
-    public T getHead() throws IndexOutOfBoundsException, EmptyStackException {
-        if (this.isEmpty())
-            throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
-
-        return this.head.getData();
     }
 
     @Override
