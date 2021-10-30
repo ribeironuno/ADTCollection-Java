@@ -7,7 +7,7 @@ import java.util.EmptyStackException;
  *
  * @param <T> Type being store by list.
  */
-public interface IList<T> {
+public interface ListADT<T> {
     /**
      * Adds an element to list.
      *
