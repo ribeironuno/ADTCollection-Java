@@ -2,7 +2,7 @@ package collections.interfaces;
 
 import java.util.EmptyStackException;
 
-public interface IStack<T> {
+public interface StackADT<T> {
 
     /**
      * Adds one element to the top of this stack.
