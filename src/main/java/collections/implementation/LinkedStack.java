@@ -1,6 +1,6 @@
 package collections.implementation;
 
-import collections.interfaces.IStack;
+import collections.interfaces.StackADT;
 
 import java.util.EmptyStackException;
 
@@ -9,7 +9,7 @@ import java.util.EmptyStackException;
  *
  * @param <T> Type being storage.
  */
-public class LinkedStack<T> implements IStack<T> {
+public class LinkedStack<T> implements StackADT<T> {
 
     /**
      * Top node.

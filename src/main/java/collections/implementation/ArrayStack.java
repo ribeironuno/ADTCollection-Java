@@ -1,6 +1,6 @@
 package collections.implementation;
 
-import collections.interfaces.IStack;
+import collections.interfaces.StackADT;
 
 import java.util.EmptyStackException;
 
@@ -9,7 +9,7 @@ import java.util.EmptyStackException;
  *
  * @param <T> Type being stored
  */
-public class ArrayStack<T> implements IStack<T> {
+public class ArrayStack<T> implements StackADT<T> {
 
     /**
      * Default value for array
