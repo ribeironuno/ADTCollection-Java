@@ -1,9 +1,8 @@
 package collections.implementation;
 
-import collections.interfaces.ListADT;
+import collections.interfaces.LinkedListADT;
 
 import java.util.Arrays;
-import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
 /**
@@ -11,7 +10,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Type being stored.
  */
-public class DoublyLinkedList<T> implements ListADT<T> {
+public class DoublyLinkedList<T> implements LinkedListADT<T> {
 
     /**
      * Head node, most recently added node.

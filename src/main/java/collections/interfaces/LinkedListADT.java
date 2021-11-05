@@ -7,13 +7,14 @@ import java.util.EmptyStackException;
  *
  * @param <T> Type being store by list.
  */
-public interface ListADT<T> {
+public interface LinkedListADT<T> {
     /**
      * Adds an element to list.
      *
      * @param elem Element being added.
      * @throws NullPointerException Throws an exception in case the element is null.
      */
+
     public void add(T elem) throws NullPointerException;
 
     /**

@@ -1,6 +1,6 @@
 package collections.implementation;
 
-import collections.interfaces.ListADT;
+import collections.interfaces.LinkedListADT;
 
 import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T> Type being store in list.
  */
-public class MyLinkedList<T> implements ListADT<T> {
+public class MyLinkedList<T> implements LinkedListADT<T> {
 
     /**
      * First node, most recently node added always.
