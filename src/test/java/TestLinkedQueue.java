@@ -1,6 +1,4 @@
-import collections.implementation.CircularArrayQueue;
 import collections.implementation.LinkedQueue;
-import collections.interfaces.QueueADT;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +16,9 @@ Running it will execute all the methods marked with the '@Test' annotation, then
 For the most part, tests pass as long as they don't fail an assertion or throw an exception.
 */
 
-public class TestCircularArrayQueue {
+public class TestLinkedQueue {
 
-    private QueueADT<Integer> queue = new CircularArrayQueue<>();
+    private final LinkedQueue<Integer> queue = new LinkedQueue<>();
 
     @Test
     //the '@Test' annotation marks it as, surprisingly enough, a test.
@@ -32,7 +30,7 @@ public class TestCircularArrayQueue {
     @Test
     public void testIsEmptyOnNotEmpty() {
         queue.enqueue(5);
-        Assertions.assertFalse(queue.isEmpty());
+        Assertions.assertTrue(!queue.isEmpty());
     }
 
     @Test
@@ -72,7 +70,7 @@ public class TestCircularArrayQueue {
     //Note: this uses random values, which means that running tests different times could have different results (if, say, there is a bug in your code but hitting it is rare)
     private void testNOperations(int n) {
         Random r = new Random();
-        LinkedList<Integer> goodQueue = new LinkedList<>();
+        LinkedList<Integer> goodQueue = new LinkedList<Integer>();
         int num;
         for (int i = 0; i < n; i++) {
             //enqueue element if queue is empty, or on a 2/3 chance
@@ -82,7 +80,7 @@ public class TestCircularArrayQueue {
                 goodQueue.add(num);
             } else //dequeue
             {
-                Assertions.assertSame(goodQueue.remove(), queue.dequeue());
+                Assertions.assertTrue(goodQueue.remove() == queue.dequeue());
             }
             //using different asserts, such as assertEquals, can clarify your intent to people reading your code
             //technically, when using assertEquals, you're supposed to put the expected value first, then the actual value
@@ -91,8 +89,8 @@ public class TestCircularArrayQueue {
 
         //now that we're done going through n operations, dequeue until empty and compare results
         while (!queue.isEmpty()) {
-            Assertions.assertFalse(goodQueue.isEmpty());
-            Assertions.assertSame(goodQueue.remove(), queue.dequeue());
+            Assertions.assertTrue(!goodQueue.isEmpty());
+            Assertions.assertTrue(goodQueue.remove() == queue.dequeue());
         }
         Assertions.assertTrue(goodQueue.isEmpty());
     }

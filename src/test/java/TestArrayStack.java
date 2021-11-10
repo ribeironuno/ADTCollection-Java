@@ -7,6 +7,7 @@
  *
  * https://www.eclipse.org/legal/epl-v20.html
  */
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
