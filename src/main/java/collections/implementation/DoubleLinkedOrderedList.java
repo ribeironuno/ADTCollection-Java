@@ -6,9 +6,9 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoubleLink
 
     @Override
     public void add(T element) {
-        if (element == null)
+        if (element == null) {
             throw new NullPointerException("Linked list does not support null elements");
-
+        }
         if (super.size == 0) {
             super.front = super.rear = new NodeDouble<>(element);
         } else {

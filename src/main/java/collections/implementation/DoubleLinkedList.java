@@ -2,6 +2,7 @@ package collections.implementation;
 
 import collections.interfaces.ListADT;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -35,9 +36,9 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
 
     @Override
     public T removeFirst() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         T result = this.front.getData();
         if (this.size == 1) {
             this.front = this.rear = null;
@@ -53,9 +54,9 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
 
     @Override
     public T removeLast() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         T result = this.rear.getData();
         if (this.size == 1) {
             this.front = this.rear = null;
@@ -91,20 +92,20 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
 
     @Override
     public T remove(T element) throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         T result;
         NodeDouble<T> node = this.find(element);
 
-        if (node == null)
+        if (node == null) {
             throw new NoSuchElementException("Element not found");
-
-        if (this.front.equals(node))
+        }
+        if (this.front.equals(node)) {
             result = this.removeFirst();
-        else if (this.rear.equals(node))
+        } else if (this.rear.equals(node)) {
             result = this.removeLast();
-        else {
+        } else {
             result = node.getData();
             node.getPrev().setNext(node.getNext());
             node.getNext().setPrev(node.getPrev());
@@ -116,25 +117,25 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
 
     @Override
     public T first() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         return this.front.getData();
     }
 
     @Override
     public T last() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         return this.rear.getData();
     }
 
     @Override
     public boolean contains(T target) throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         return this.find(target) != null;
     }
 
@@ -148,9 +149,97 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
         return this.size;
     }
 
+    /**
+     * Checks if modifications occurred.
+     *
+     * @param expectedMod Mod to compare.
+     * @return true if changes was made meanwhile, false otherwise.
+     */
+    private boolean modificationsOccurred(int expectedMod) {
+        return this.modCount != expectedMod;
+    }
+
+    private class DoubleIterator implements Iterator<T> {
+
+        /**
+         * Reference to next element to be returned by subsequent call to next.
+         */
+        private NodeDouble<T> cursor;
+
+        /**
+         * Tracks the position on chain.
+         */
+        private int count;
+
+        /**
+         * The modCount value that the iterator believes that the backing
+         * List should have.  If this expectation is violated, the iterator
+         * has detected concurrent modification.
+         */
+        private int expectedMod;
+
+
+        /**
+         * Flag to check if it's ok to remove.
+         */
+        private boolean okToRemove;
+
+        DoubleIterator() {
+            this.cursor = front;
+            this.count = 0;
+            this.expectedMod = modCount;
+            this.okToRemove = false;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.count < size;
+        }
+
+        @Override
+        public T next() {
+            if (modificationsOccurred(this.expectedMod)) {
+                throw new ConcurrentModificationException("Changes occurred in list");
+            }
+            if (!hasNext()) {
+                throw new NoSuchElementException("There is no more elements to iterate");
+            }
+            this.okToRemove = true;
+            this.count++;
+            T result = cursor.getData();
+            cursor = cursor.getNext();
+            return result;
+        }
+
+        @Override
+        public void remove() {
+            if (modificationsOccurred(this.expectedMod)) {
+                throw new ConcurrentModificationException("Changes occurred in list");
+            }
+            if (this.okToRemove) {
+                NodeDouble<T> nodeToRemove = cursor == null ? rear : cursor.getPrev();
+                if (nodeToRemove.equals(front)) {
+                    DoubleLinkedList.this.removeFirst();
+                } else if (nodeToRemove.equals(rear)) {
+                    DoubleLinkedList.this.removeLast();
+                } else {
+                    nodeToRemove.getPrev().setNext(nodeToRemove.getNext());
+                    nodeToRemove.getNext().setPrev(nodeToRemove.getPrev());
+                    size--;
+                    modCount++;
+                }
+                this.count--;
+                this.okToRemove = false;
+                expectedMod = modCount;
+            } else {
+                throw new IllegalStateException("Next has not occurred");
+            }
+        }
+    }
+
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new DoubleIterator();
     }
 
     @Override
