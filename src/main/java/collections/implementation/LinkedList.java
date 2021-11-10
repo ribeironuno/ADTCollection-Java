@@ -1,7 +1,6 @@
 package collections.implementation;
 
 import collections.interfaces.ListADT;
-import jdk.jfr.Description;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -24,7 +23,6 @@ public abstract class LinkedList<T> implements ListADT<T> {
      */
     protected int size;
 
-
     /**
      * Variable to check modifications done in collection. This counter will increase when an operation of add or removed occurs.
      */
@@ -45,9 +43,9 @@ public abstract class LinkedList<T> implements ListADT<T> {
 
     @Override
     public T removeFirst() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         T result = this.head.getData();
         if (this.size == 1) {
             this.clear();
@@ -61,17 +59,17 @@ public abstract class LinkedList<T> implements ListADT<T> {
 
     @Override
     public T removeLast() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         T result = this.tail.getData();
         if (this.size == 1) {
             this.clear();
         } else {
             Node<T> current = this.head;
-            while (current.getNext().getNext() != null)
+            while (current.getNext().getNext() != null) {
                 current = current.getNext();
-
+            }
             this.tail = current;
             this.tail.setNext(null);
             this.size--;
@@ -82,9 +80,9 @@ public abstract class LinkedList<T> implements ListADT<T> {
 
     @Override
     public T remove(T targetElement) throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         boolean found = false;
         Node<T> previous = null;
         Node<T> current = this.head;
@@ -97,9 +95,9 @@ public abstract class LinkedList<T> implements ListADT<T> {
                 current = current.getNext();
             }
         }
-        if (!found)
+        if (!found) {
             throw new NoSuchElementException("Element not found!");
-
+        }
         if (this.size == 1) {
             this.clear();
         } else if (current.equals(head)) {
@@ -117,31 +115,33 @@ public abstract class LinkedList<T> implements ListADT<T> {
 
     @Override
     public T first() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         return this.head.getData();
     }
 
     @Override
     public T last() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         return this.tail.getData();
     }
 
     @Override
     public boolean contains(T target) throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty");
-
+        }
         boolean found = false;
         Node<T> current = this.head;
         while (!found && current != null) {
-            if (current.getData().equals(target))
+            if (current.getData().equals(target)) {
                 found = true;
-            current = current.getNext();
+            } else {
+                current = current.getNext();
+            }
         }
         return found;
     }
@@ -174,9 +174,9 @@ public abstract class LinkedList<T> implements ListADT<T> {
     private void unlink(Node<T> node) {
         Node<T> current = this.head;
 
-        while (current.getNext() != node)
+        while (current.getNext() != node) {
             current = current.getNext();
-
+        }
         current.setNext(current.getNext().getNext());
         this.size--;
         this.modCount++;
@@ -220,25 +220,25 @@ public abstract class LinkedList<T> implements ListADT<T> {
 
         @Override
         public boolean hasNext() {
-            if (modificationsOccurred(this.expectedMod))
+            if (modificationsOccurred(this.expectedMod)) {
                 throw new ConcurrentModificationException();
-
+            }
             return this.counter < size;
         }
 
         @Override
         public T next() {
-            if (modificationsOccurred(this.expectedMod))
+            if (modificationsOccurred(this.expectedMod)) {
                 throw new ConcurrentModificationException("Changes occurred in collection");
-
-            if (!this.hasNext())
+            }
+            if (!this.hasNext()) {
                 throw new NoSuchElementException("There is no more elements to iterate");
-
-            if (this.counter == 0)
+            }
+            if (this.counter == 0) {
                 this.cursor = head;
-            else
+            } else {
                 this.cursor = this.cursor.getNext();
-
+            }
             this.okToRemove = true;
             this.lastReturned = this.cursor;
 
@@ -248,9 +248,9 @@ public abstract class LinkedList<T> implements ListADT<T> {
 
         @Override
         public void remove() {
-            if (modificationsOccurred(this.expectedMod))
+            if (modificationsOccurred(this.expectedMod)) {
                 throw new ConcurrentModificationException("Changes occurred in list");
-
+            }
             if (this.okToRemove) {
                 Node<T> lastNext = this.lastReturned.getNext();
                 if (this.lastReturned.equals(head)) {
@@ -261,11 +261,11 @@ public abstract class LinkedList<T> implements ListADT<T> {
                     LinkedList.this.unlink(this.lastReturned);
                 }
 
-                if (this.cursor.equals(this.lastReturned))
+                if (this.cursor.equals(this.lastReturned)) {
                     this.cursor = lastNext;
-                else
+                } else {
                     this.counter--;
-
+                }
                 this.expectedMod = modCount; //Because remove action on list change mod count
                 this.okToRemove = false;
             } else {

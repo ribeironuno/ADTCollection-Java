@@ -1,13 +1,18 @@
 package collections.implementation;
 
+import collections.exceptions.NotComparableInstance;
 import collections.interfaces.OrderedListADT;
 
-public class LinkedListOrdered<T extends Comparable<T>> extends LinkedList<T> implements OrderedListADT<T> {
+public class LinkedListOrdered<T> extends LinkedList<T> implements OrderedListADT<T> {
 
     @Override
-    public void add(T element) {
-        if (element == null)
+    @SuppressWarnings("unchecked")
+    public void add(T element) throws NotComparableInstance {
+        if (element == null) {
             throw new NullPointerException("Linked list does not support null elements");
+        } else if (!(element instanceof Comparable)) {
+            throw new NotComparableInstance("Element must be instance of comparable");
+        }
 
         if (super.size == 0) {
             super.head = super.tail = new Node<>(element);
@@ -17,7 +22,7 @@ public class LinkedListOrdered<T extends Comparable<T>> extends LinkedList<T> im
             boolean found = false;
 
             while (current != null && !found) {
-                if (current.getData().compareTo(element) > 0) { //Current will set to index that will stay after the new node, if exists.
+                if (((Comparable<T>) current.getData()).compareTo(element) > 0) { //Current will set to index that will stay after the new node, if exists.
                     found = true;
                 } else {
                     previous = current;
