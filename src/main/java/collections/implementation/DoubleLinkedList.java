@@ -217,7 +217,7 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
                 throw new ConcurrentModificationException("Changes occurred in list");
             }
             if (this.okToRemove) {
-                DoubleNode<T> nodeToRemove = cursor == null ? rear : cursor.getPrev();
+                DoubleNode<T> nodeToRemove = (cursor == null) ? rear : cursor.getPrev(); //Checks if cursor equals to null, in other words, if it is to remove rear node
                 if (nodeToRemove.equals(front)) {
                     DoubleLinkedList.this.removeFirst();
                 } else if (nodeToRemove.equals(rear)) {
