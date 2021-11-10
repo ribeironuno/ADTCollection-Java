@@ -35,9 +35,9 @@ public abstract class ArrayList<T> implements ListADT<T> {
      */
     @SuppressWarnings("unchecked")
     public ArrayList(int capacity) {
-        if (capacity <= 0)
+        if (capacity <= 0) {
             capacity = DEFAULT_CAPACITY;
-
+        }
         this.array = (T[]) (new Object[capacity]);
         this.size = this.modCount = 0;
     }
@@ -49,11 +49,24 @@ public abstract class ArrayList<T> implements ListADT<T> {
         this(DEFAULT_CAPACITY);
     }
 
+    /**
+     * Sets the reference of array to another array of double size.
+     */
+    @SuppressWarnings("unchecked")
+    protected void expand() {
+        T[] tmp = (T[]) new Object[this.array.length * 2];
+
+        for (int i = 0; i < this.size; i++) {
+            tmp[i] = this.array[i];
+        }
+        this.array = tmp;
+    }
+
     @Override
     public T removeFirst() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty!");
-
+        }
         T result = this.array[0];
 
         for (int i = 0; i < this.size - 1; i++) {
@@ -66,9 +79,9 @@ public abstract class ArrayList<T> implements ListADT<T> {
 
     @Override
     public T removeLast() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty!");
-
+        }
         T result = this.array[this.size - 1];
         this.size--;
         this.modCount++;
@@ -77,14 +90,14 @@ public abstract class ArrayList<T> implements ListADT<T> {
 
     @Override
     public T remove(T element) throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty!");
-
+        }
         int index = this.indexOf(element);
 
-        if (index == -1)
+        if (index == -1) {
             throw new NoSuchElementException("Element does not exist!");
-
+        }
         T result = this.array[index];
         for (int i = index; i < this.size - 1; i++) {
             this.array[i] = this.array[i + 1];
@@ -96,17 +109,17 @@ public abstract class ArrayList<T> implements ListADT<T> {
 
     @Override
     public T first() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty!");
-
+        }
         return this.array[0];
     }
 
     @Override
     public T last() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty!");
-
+        }
         return this.array[this.size - 1];
     }
 
@@ -120,17 +133,18 @@ public abstract class ArrayList<T> implements ListADT<T> {
         int index = -1;
 
         for (int i = 0; i < this.size && index == -1; i++) {
-            if (this.array[i].equals(element))
+            if (this.array[i].equals(element)) {
                 index = i;
+            }
         }
         return index;
     }
 
     @Override
     public boolean contains(T target) throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("List is empty!");
-
+        }
         return this.indexOf(target) != -1;
     }
 
@@ -189,20 +203,20 @@ public abstract class ArrayList<T> implements ListADT<T> {
 
         @Override
         public boolean hasNext() {
-            if (modificationsOccurred(this.expectedMod))
+            if (modificationsOccurred(this.expectedMod)) {
                 throw new ConcurrentModificationException();
-
+            }
             return this.cursor != size;
         }
 
         @Override
         public T next() {
-            if (modificationsOccurred(this.expectedMod))
+            if (modificationsOccurred(this.expectedMod)) {
                 throw new ConcurrentModificationException();
-
-            if (!this.hasNext())
+            }
+            if (!this.hasNext()) {
                 throw new NoSuchElementException("There is no next");
-
+            }
             this.okToRemove = true;
             this.lastGap = this.cursor;
             this.cursor++;
@@ -211,9 +225,9 @@ public abstract class ArrayList<T> implements ListADT<T> {
 
         @Override
         public void remove() {
-            if (modificationsOccurred(this.expectedMod))
+            if (modificationsOccurred(this.expectedMod)) {
                 throw new ConcurrentModificationException();
-
+            }
             if (this.okToRemove) {
                 ArrayList.this.remove(array[this.lastGap]);
                 this.cursor = this.lastGap;
@@ -231,18 +245,12 @@ public abstract class ArrayList<T> implements ListADT<T> {
         return new BasicIterator();
     }
 
-    /**
-     * "Expands" capacity array
-     */
-    protected abstract void expand();
-
     @Override
     public String toString() {
         String string = "";
-        Iterator<T> iterator = this.iterator();
-        while (iterator.hasNext())
-            string += iterator.next().toString() + " ";
-
+        for (int i = 0; i < this.size; i++) {
+            string += this.array[i].toString();
+        }
         return string;
     }
 }
