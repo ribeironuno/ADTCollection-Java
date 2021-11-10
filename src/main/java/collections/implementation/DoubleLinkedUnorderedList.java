@@ -9,9 +9,9 @@ public class DoubleLinkedUnorderedList<T> extends DoubleLinkedList<T> implements
     @Override
     public void addToFront(T element) {
         if (super.size == 0) {
-            super.front = super.rear = new NodeDouble<>(null, null, element);
+            super.front = super.rear = new DoubleNode<>(null, null, element);
         } else {
-            NodeDouble<T> newNode = new NodeDouble<>(super.front, null, element);
+            DoubleNode<T> newNode = new DoubleNode<>(super.front, null, element);
             super.front.setPrev(newNode);
             super.front = newNode;
         }
@@ -22,9 +22,9 @@ public class DoubleLinkedUnorderedList<T> extends DoubleLinkedList<T> implements
     @Override
     public void addToRear(T element) {
         if (super.size == 0) {
-            super.front = super.rear = new NodeDouble<>(null, null, element);
+            super.front = super.rear = new DoubleNode<>(null, null, element);
         } else {
-            NodeDouble<T> newNode = new NodeDouble<>(null, super.rear, element);
+            DoubleNode<T> newNode = new DoubleNode<>(null, super.rear, element);
             super.rear.setNext(newNode);
             super.rear = newNode;
         }
@@ -34,13 +34,13 @@ public class DoubleLinkedUnorderedList<T> extends DoubleLinkedList<T> implements
 
     @Override
     public void addAfter(T target, T element) throws NoSuchElementException {
-        NodeDouble<T> afterNode = super.find(target);
+        DoubleNode<T> afterNode = super.find(target);
 
         if (afterNode != null) {
             if (afterNode.equals(super.rear))
                 this.addToRear(element);
             else {
-                NodeDouble<T> newNode = new NodeDouble<>(afterNode.getNext(), afterNode, element);
+                DoubleNode<T> newNode = new DoubleNode<>(afterNode.getNext(), afterNode, element);
                 afterNode.setNext(newNode);
                 newNode.getNext().setPrev(newNode);
                 super.size++;

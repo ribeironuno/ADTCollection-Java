@@ -11,12 +11,12 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
     /**
      * Front node.
      */
-    protected NodeDouble<T> front;
+    protected DoubleNode<T> front;
 
     /**
      * Rear node.
      */
-    protected NodeDouble<T> rear;
+    protected DoubleNode<T> rear;
 
     /**
      * Size of collection.
@@ -75,9 +75,9 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
      * @param element element to search.
      * @return Node if element exists, null otherwise.
      */
-    protected NodeDouble<T> find(T element) {
+    protected DoubleNode<T> find(T element) {
         boolean found = false;
-        NodeDouble<T> current = this.front;
+        DoubleNode<T> current = this.front;
 
         if (!this.isEmpty()) {
             while (!found && current != null) {
@@ -96,7 +96,7 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
             throw new NoSuchElementException("List is empty");
         }
         T result;
-        NodeDouble<T> node = this.find(element);
+        DoubleNode<T> node = this.find(element);
 
         if (node == null) {
             throw new NoSuchElementException("Element not found");
@@ -164,7 +164,7 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
         /**
          * Reference to next element to be returned by subsequent call to next.
          */
-        private NodeDouble<T> cursor;
+        private DoubleNode<T> cursor;
 
         /**
          * Tracks the position on chain.
@@ -217,7 +217,7 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
                 throw new ConcurrentModificationException("Changes occurred in list");
             }
             if (this.okToRemove) {
-                NodeDouble<T> nodeToRemove = cursor == null ? rear : cursor.getPrev();
+                DoubleNode<T> nodeToRemove = cursor == null ? rear : cursor.getPrev();
                 if (nodeToRemove.equals(front)) {
                     DoubleLinkedList.this.removeFirst();
                 } else if (nodeToRemove.equals(rear)) {
@@ -246,7 +246,7 @@ public abstract class DoubleLinkedList<T> implements ListADT<T> {
     public String toString() {
         String string = "";
         if (this.size != 0) {
-            NodeDouble<T> current = this.front;
+            DoubleNode<T> current = this.front;
             while (current != null) {
                 string += current.getData().toString() + " ";
                 current = current.getNext();

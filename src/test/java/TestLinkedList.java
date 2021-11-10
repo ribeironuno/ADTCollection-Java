@@ -1,5 +1,6 @@
 import static org.junit.jupiter.api.Assertions.*;
 
+import collections.exceptions.NotComparableInstance;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -12,10 +13,10 @@ import java.util.NoSuchElementException;
 
 public class TestLinkedList {
 
-    private MyLinkedList<Integer> list = new MyLinkedList<>();
+    private MyLinkedList<Integer> list;
 
     @Test
-    @DisplayName("Testa a exceção da lista vazia")
+    @DisplayName("Test NoSuchElementException exception")
     public void testEmptyList() {
         Assertions.assertThrows(NoSuchElementException.class, () -> {
             list.remove(2);
@@ -26,7 +27,7 @@ public class TestLinkedList {
     }
 
     @Test
-    public void testAddElement() {
+    public void testAddElement() throws NotComparableInstance {
         int count = 0;
         Assertions.assertEquals(count++, list.size());
         list.add(2);

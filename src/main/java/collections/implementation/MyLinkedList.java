@@ -46,9 +46,9 @@ public class MyLinkedList<T> implements LinkedListADT<T> {
 
     @Override
     public void add(T elem) throws NullPointerException {
-        if (elem == null)
+        if (elem == null) {
             throw new NullPointerException("Linked list does not support null elements");
-
+        }
         if (this.isEmpty()) {
             this.head = new Node<T>(elem);
         } else {
@@ -71,9 +71,9 @@ public class MyLinkedList<T> implements LinkedListADT<T> {
 
     @Override
     public boolean remove(T elem) throws EmptyStackException {
-        if (this.size == 0)
+        if (this.size == 0) {
             throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
-
+        }
         if (this.head.getData().equals(elem)) { //If is the head
             this.removeHead();
         } else {

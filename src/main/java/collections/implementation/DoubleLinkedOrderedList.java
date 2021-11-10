@@ -10,9 +10,9 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoubleLink
             throw new NullPointerException("Linked list does not support null elements");
         }
         if (super.size == 0) {
-            super.front = super.rear = new NodeDouble<>(element);
+            super.front = super.rear = new DoubleNode<>(element);
         } else {
-            NodeDouble<T> current = super.front;
+            DoubleNode<T> current = super.front;
             boolean found = false;
 
             while (!found && current != null) {
@@ -24,16 +24,16 @@ public class DoubleLinkedOrderedList<T extends Comparable<T>> extends DoubleLink
 
             if (found) {
                 if (current.equals(super.front)) {
-                    NodeDouble<T> newNode = new NodeDouble<>(super.front, null, element);
+                    DoubleNode<T> newNode = new DoubleNode<>(super.front, null, element);
                     super.front.setPrev(newNode);
                     super.front = newNode;
                 } else {
-                    NodeDouble<T> newNode = new NodeDouble<>(current, current.getPrev(), element);
+                    DoubleNode<T> newNode = new DoubleNode<>(current, current.getPrev(), element);
                     newNode.getPrev().setNext(newNode);
                     newNode.getNext().setPrev(newNode);
                 }
             } else {
-                NodeDouble<T> newNode = new NodeDouble<>(null, super.rear, element);
+                DoubleNode<T> newNode = new DoubleNode<>(null, super.rear, element);
                 super.rear.setNext(newNode);
                 super.rear = newNode;
             }

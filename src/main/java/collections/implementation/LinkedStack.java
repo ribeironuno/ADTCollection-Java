@@ -32,9 +32,9 @@ public class LinkedStack<T> implements StackADT<T> {
 
     @Override
     public T pop() throws EmptyStackException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new EmptyStackException();
-
+        }
         T result = this.top.getData();
         top = top.getNext();
         this.size--;
@@ -43,9 +43,9 @@ public class LinkedStack<T> implements StackADT<T> {
 
     @Override
     public T peek() throws EmptyStackException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new EmptyStackException();
-
+        }
         return this.top.getData();
     }
 
@@ -61,14 +61,14 @@ public class LinkedStack<T> implements StackADT<T> {
 
     @Override
     public String toString() {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             return "EMPTY LIST";
-
+        }
         Node<T> current = this.top;
         String string = "";
         while (current != null) {
             string += current.getData().toString() + " ";
-           current = current.getNext();
+            current = current.getNext();
         }
         return string;
     }

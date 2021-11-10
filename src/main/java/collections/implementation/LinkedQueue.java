@@ -43,9 +43,9 @@ public class LinkedQueue<T> implements QueueADT<T> {
 
     @Override
     public T dequeue() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Queue is empty");
-
+        }
         T result = this.front.getData();
         if (this.size == 1) {
             this.front = this.rear = null;
@@ -58,9 +58,9 @@ public class LinkedQueue<T> implements QueueADT<T> {
 
     @Override
     public T first() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Queue is empty");
-
+        }
         return this.front.getData();
     }
 

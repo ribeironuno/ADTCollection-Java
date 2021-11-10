@@ -38,9 +38,9 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
      */
     @SuppressWarnings("unchecked")
     public CircularArrayQueue(int initialCapacity) {
-        if (initialCapacity <= 0)
+        if (initialCapacity <= 0) {
             initialCapacity = DEFAULT_INITIAL_SIZE;
-
+        }
         this.front = this.rear = this.size = 0;
         this.arr = (T[]) new Object[initialCapacity];
     }
@@ -75,9 +75,9 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
 
     @Override
     public void enqueue(T element) {
-        if ((this.rear + 1) % this.arr.length == this.front)  //Checks if array is full
+        if ((this.rear + 1) % this.arr.length == this.front) {  //Checks if array is full
             this.expand();
-
+        }
         this.arr[this.rear] = element;
         this.rear = (this.rear + 1) % this.arr.length;
         this.size++;
@@ -86,9 +86,9 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
 
     @Override
     public T dequeue() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Queue is empty");
-
+        }
         T result = this.arr[this.front];
         if (this.front == this.rear) {
             this.front = this.rear = 0;
@@ -101,9 +101,9 @@ public class CircularArrayQueue<T> implements QueueADT<T> {
 
     @Override
     public T first() throws NoSuchElementException {
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Queue is empty");
-
+        }
         return this.arr[this.front];
     }
 

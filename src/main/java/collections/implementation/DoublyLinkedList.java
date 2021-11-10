@@ -15,12 +15,12 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
     /**
      * Head node, most recently added node.
      */
-    private NodeDouble<T> head;
+    private DoubleNode<T> head;
 
     /**
      * Tail node, the oldest node.
      */
-    private NodeDouble<T> tail;
+    private DoubleNode<T> tail;
 
     /**
      * Size of list.
@@ -35,9 +35,9 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
     @Override
     public void add(T elem) {
         if (this.size == 0) {
-            this.head = this.tail = new NodeDouble<T>(elem);
+            this.head = this.tail = new DoubleNode<T>(elem);
         } else {
-            NodeDouble<T> newNode = new NodeDouble<>(this.head, null, elem);
+            DoubleNode<T> newNode = new DoubleNode<>(this.head, null, elem);
             this.head.setPrev(newNode);
             this.head = newNode;
         }
@@ -95,7 +95,7 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
      * @param node Node to be removed.
      * @implNote ELEMENT RECEIVED CANNOT BELONG TO A NODE THAT IS NEITHER HEAD NOR TAIL
      */
-    private void removeNode(NodeDouble<T> node) {
+    private void removeNode(DoubleNode<T> node) {
         node.getPrev().setNext(node.getNext());
         node.getNext().setPrev(node.getPrev());
         this.size--;
@@ -110,9 +110,9 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
      */
     public boolean remove(T elem) throws NoSuchElementException {
         boolean flag = false;
-        if (this.isEmpty())
+        if (this.isEmpty()) {
             throw new NoSuchElementException("Operation REMOVE failed: list is empty!");
-
+        }
         if (elem != null) {
             if (this.head.getData().equals(elem)) { //if is head node
                 this.removeFirst();
@@ -121,7 +121,7 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
                 this.removeLast();
                 flag = true;
             } else {
-                NodeDouble<T> current = this.head;
+                DoubleNode<T> current = this.head;
                 while (!flag && current.getNext() != null) {
                     if (current.getNext().getData().equals(elem)) {
                         this.removeNode(current.getNext());
@@ -140,32 +140,30 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
     }
 
     /**
-     * Verifica se os limites para analise são válidas.
+     * Verify if limits are valid.
      *
-     * @param firstPos Primeira posição.
-     * @param lastPos  Ultima posição.
-     * @return True se forem válidas, falso caso contrário.
+     * @param firstPos First position
+     * @param lastPos  Last position.
+     * @return True if all are valid, false otherwise.
      */
     private boolean positionsAreValid(int firstPos, int lastPos) {
         return firstPos >= 0 && lastPos >= 0 && firstPos <= lastPos && firstPos <= this.size;
     }
 
     /**
-     * Método que retorna um array com os elementos entre duas posições, inclusive, da lista ligada
+     * Returns in array format elements from collection.
      *
-     * @param firstPos Primeiro limite inclusive.
-     * @param lastPos  Ultimo limite inclusive. Caso o valor seja maior que o tamanho total da lista, irá ser assumido que o valor pretendido é o tamanho da lista.
-     * @return Retorna um array com os elementos dentro dos limites, caso não haja elementos ou os limites estejam mal definidos,
-     * o retorno será um array vazio.
+     * @param firstPos First position inclusive.
+     * @param lastPos  Last position inclusive. In case of the value is greater than the real size, the last value will be the max value.
+     * @return Return valid array, null array if limits are out of bounds.
      */
     public Object[] toArray(int firstPos, int lastPos) {
-        if (this.positionsAreValid(firstPos, lastPos)) { //Verifica se as posições são validas
-            //T[] arr = (T[]) java.lang.reflect.Array.newInstance(this.head.data.getClass(), this.size); -> Método usado para ser possível depois fazer o cast para o tipo T
+        if (this.positionsAreValid(firstPos, lastPos)) {
             Object[] arr = new Object[this.size];
             int arrayCount = 0;
             int actualPos = 0;
 
-            NodeDouble<T> current = this.head;
+            DoubleNode<T> current = this.head;
             while (current != null) {
                 if (actualPos >= firstPos && actualPos <= lastPos) {
                     arr[arrayCount++] = current.getData();
@@ -180,46 +178,44 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
     }
 
     /**
-     * Método que retorna os elementos todos da lista.
+     * Return all methods in array.
      *
-     * @return Retorna um array com os elementos todos, caso não haja elementos o array é vazio.
+     * @return Return array with elements, array empty if there is no elements.
      */
     public Object[] toArray() {
         return this.toArray(0, this.size);
     }
 
     /**
-     * Método que retorna os elementos da lista até uma dada posição inclusive no formato de array.
+     * Return elements in array until position.
      *
-     * @param untilPos Posição até onde são lidos os elementos, inclusive.
-     * @return Retorna um array com os elementos dentro dos limites, ou retorna um array vazio caso não haja elementos, ou
-     * o limite tenha sido mal definido.
+     * @param untilPos Posistion.
+     * @return Return array with elements, array empty if there is no elements.
      */
     public Object[] toArrayUntil(int untilPos) {
         return this.toArray(0, untilPos);
     }
 
     /**
-     * Método que retorna os elementos após uma dada posição da lista no formato de array.
+     * Return elements in array after position.
      *
-     * @param afterPos Posição do limite, inclusive.
-     * @return Retorna um array com os elementos dentro dos limites, ou retorna um array vazio caso não haja elementos, ou
-     * o limite tenha sido mal definido.
+     * @param afterPos * Return elements in array until position.
+     * @return Return array with elements, array empty if there is no elements.
      */
     public Object[] toArrayAfter(int afterPos) {
         return this.toArray(afterPos, this.size);
     }
 
     /**
-     * Remove todos os elementos iguais ao recebido e retorna o número de interações.
+     * Remove all elements equals to received element and returns number of occurrences.
      *
-     * @param elem Elemento a ser comparado com os elementos da lista.
-     * @return Retorno > 0 caso tenha havido alterações, retorno 0 caso não tenha havio alterações.
-     * @throws NoSuchElementException Lança a exceção caso a lista esteja vazia.
+     * @param elem Element to be compared
+     * @return Return number of changes
+     * @throws NoSuchElementException If list is empty
      */
     public int removeAllOf(T elem) throws NoSuchElementException {
         int count = 0;
-        NodeDouble<T> current = this.head;
+        DoubleNode<T> current = this.head;
         while (current != null) {
             if (current.getData().equals(elem)) { //Caso o node em questão seja para remover
                 if (current.equals(this.head)) { //Caso seja o node head.
@@ -236,14 +232,11 @@ public class DoublyLinkedList<T> implements LinkedListADT<T> {
         return count;
     }
 
-    /**
-     * Imprime todos os elementos da lista.
-     */
     @Override
     public String toString() {
         String string = "";
         if (this.size != 0) {
-            NodeDouble<T> current = this.head;
+            DoubleNode<T> current = this.head;
             while (current != null) {
                 string += current.getData().toString() + " ";
                 current = current.getNext();

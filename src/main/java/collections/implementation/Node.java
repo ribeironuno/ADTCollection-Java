@@ -1,73 +1,73 @@
 package collections.implementation;
 
 /**
- * Classe que representa um nó singular.
+ * Class that represents a single node.
  *
- * @param <T> Tipo a ser guardado.
+ * @param <T> Type being stored.
  */
 public class Node<T> {
 
     /**
-     * Próximo node da lista.
+     * Next node.
      */
     private Node<T> next;
 
     /**
-     * Referência para a informação armazenada.
+     * Reference to element's data.
      */
     private T data;
 
     /**
-     * Cria uma instância de um node com ligação a outra instãncia de node e guarda a referência para a instância do tipo {@link T}.
+     * Creates an instance of Node.
      *
-     * @param next Node que a instância aponta.
-     * @param data Informação a ser guardada.
+     * @param next Next node.
+     * @param data Data being stored.
      */
-    Node(Node<T> next, T data) {
+    public Node(Node<T> next, T data) {
         this.next = next;
         this.data = data;
     }
 
     /**
-     * Cria uma instância de um node, apenas guarda a referência para a instância do tipo {@link T} e aponta para null;
+     * Creates an instance of Node with next node null.
      *
-     * @param data Informação a ser guardada.
+     * @param data Data being stored.
      */
-    Node(T data) {
+    public Node(T data) {
         this(null, data);
     }
 
     /**
-     * Atualiza os dados do node.
+     * Update data.
      *
-     * @param data Novo dado.
+     * @param data New data.
      */
     public void setData(T data) {
         this.data = data;
     }
 
     /**
-     * Atualiza o próximo node para que aponta.
+     * Update next node.
      *
-     * @param next Novo node a apontar para o próximo.
+     * @param next New next node.
      */
     public void setNext(Node<T> next) {
         this.next = next;
     }
 
     /**
-     * Retorna o valor do elemento.
+     * Returns element's data.
      *
-     * @return Valor armazenado.
+     * @return Value stored.
      */
     public T getData() {
         return this.data;
     }
 
     /**
-     * Retorna o próximo node.
+     * Returns next node.
      *
-     * @return Node seguinte que aponta.
+     * @return Next node.
      */
     public Node<T> getNext() {
         return this.next;
