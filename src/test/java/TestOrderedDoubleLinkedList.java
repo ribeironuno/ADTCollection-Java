@@ -24,21 +24,26 @@ class TestOrderedDoubleLinkedList {
         assertTrue(strList.isEmpty());
         strList.add(1);
         assertFalse(strList.isEmpty());
+    }
 
+    @Test
+    public void removeInEmpty(){
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeFirst());
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeLast());
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.remove(2));
     }
 
     @Test
     public void size() throws NotComparableInstance {
         assertEquals(0, strList.size());
-
         strList.add(1);
+        assertEquals(1, strList.size());
         strList.add(2);
         strList.add(3);
+        assertEquals(3, strList.size());
         strList.add(4);
         strList.add(5);
-
         assertEquals(5, strList.size());
-
     }
 
     @Test
@@ -60,6 +65,9 @@ class TestOrderedDoubleLinkedList {
         assertEquals(0, strList.size());
 
         Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeLast());
+        strList.add(2);
+        Assertions.assertEquals(2, strList.first());
+        strList.removeLast();
         Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeFirst());
     }
 
@@ -100,6 +108,7 @@ class TestOrderedDoubleLinkedList {
         strList.add(5);
         strList.add(10);
         strList.add(1022);
+        strList.add(0);
         strList.add(-1022);
         strList.add(-1);
         strList.add(-100);
@@ -107,6 +116,7 @@ class TestOrderedDoubleLinkedList {
         assertEquals(-1022, strList.removeFirst());
         assertEquals(-100, strList.removeFirst());
         assertEquals(-1, strList.removeFirst());
+        assertEquals(0, strList.removeFirst());
         assertEquals(1, strList.removeFirst());
         assertEquals(5, strList.removeFirst());
         assertEquals(10, strList.removeFirst());
@@ -114,7 +124,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void cointains() throws NotComparableInstance {
+    public void contains() throws NotComparableInstance {
         strList.add(1);
         strList.add(2);
         strList.add(3);

@@ -76,19 +76,25 @@ public class TestIteratorOrdered {
     public void nextInNotEmpty() {
         try {
             list.add(0);
+            list.add(-1);
+            list.add(-2);
             list.add(1);
             list.add(2);
             list.add(3);
-            list.add(4);
+            list.add(2000);
+            list.add(-2000);
         } catch (NotComparableInstance ex) {
         }
         iterator = list.iterator();
 
+        assertEquals(-2000, iterator.next());
+        assertEquals(-2, iterator.next());
+        assertEquals(-1, iterator.next());
         assertEquals(0, iterator.next());
         assertEquals(1, iterator.next());
         assertEquals(2, iterator.next());
         assertEquals(3, iterator.next());
-        assertEquals(4, iterator.next());
+        assertEquals(2000, iterator.next());
 
         assertThrows(NoSuchElementException.class, () -> iterator.next());
         assertThrows(NoSuchElementException.class, () -> iterator.next());

@@ -26,14 +26,21 @@ class TestUnorderedDoubleLinkedList {
     }
 
     @Test
+    public void removeInEmpty() {
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeFirst());
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeLast());
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.remove("str"));
+    }
+
+    @Test
     public void size() {
         assertEquals(0, strList.size());
-
         strList.addToFront("pos 0");
+        assertEquals(1, strList.size());
         strList.addToFront("pos 1");
         strList.addToFront("pos 2");
+        assertEquals(3, strList.size());
         strList.addToFront("pos 3");
-
         assertEquals(4, strList.size());
     }
 
@@ -102,6 +109,9 @@ class TestUnorderedDoubleLinkedList {
 
         assertEquals(0, strList.size());
 
+        Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeLast());
+        strList.addToRear("pos 0");
+        strList.removeFirst();
         Assertions.assertThrows(NoSuchElementException.class, () -> strList.removeLast());
     }
 
@@ -175,7 +185,7 @@ class TestUnorderedDoubleLinkedList {
     }
 
     @Test
-    public void cointains(){
+    public void contains() {
         strList.addToRear("pos 0");
         strList.addToRear("pos 1");
         strList.addToRear("pos 2");

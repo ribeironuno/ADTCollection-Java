@@ -1,5 +1,4 @@
 import collections.implementation.CircularArrayQueue;
-import collections.implementation.LinkedQueue;
 import collections.interfaces.QueueADT;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,22 +8,13 @@ import java.util.*;
 
 /*
 #COPYRIGHT: 
-This is a sample junit test file for the Queue class.
-It exists only to verify that AwesomeQueue passes a series of tests designed to spot bugs.
-
-Running a JUnit test:
-Run it in Eclipse by going to the 'Run' menu, selecting 'Run Configurations', and double clicking 'JUnit test'.  If there are multiple junit files laying around, you may have to select which one you want.
-Running it will execute all the methods marked with the '@Test' annotation, then give you a report of whether they passed or not.
-For the most part, tests pass as long as they don't fail an assertion or throw an exception.
 */
 
 public class TestCircularArrayQueue {
 
-    private QueueADT<Integer> queue = new CircularArrayQueue<>();
+    private final QueueADT<Integer> queue = new CircularArrayQueue<>();
 
     @Test
-    //the '@Test' annotation marks it as, surprisingly enough, a test.
-    //each test will be run independently
     public void testIsEmptyOnEmpty() {
         Assertions.assertTrue(queue.isEmpty());
     }
@@ -57,7 +47,6 @@ public class TestCircularArrayQueue {
     }
 
     @Test
-    //this checks to make sure that enqueueing then dequeueing doesn't break isEmpty()
     public void testEmptyAfterDequeue() {
         queue.enqueue(5);
         queue.dequeue();
@@ -65,11 +54,6 @@ public class TestCircularArrayQueue {
     }
 
 
-    //you can, of course, declare other methods besides tests; just exclude the '@Test'.
-    //This one gets used by several tests that call it with different arguments.
-    //this performs n random operations on an AwesomeQueue and java's LinkedList, and verifies that they end up the same.
-    //this is useful for testing because 1) it can test for very large examples and 2) it tests enqueues and dequeues in all sorts of interleaved orderings, possibly picking out obscure bugs
-    //Note: this uses random values, which means that running tests different times could have different results (if, say, there is a bug in your code but hitting it is rare)
     private void testNOperations(int n) {
         Random r = new Random();
         LinkedList<Integer> goodQueue = new LinkedList<>();
@@ -84,12 +68,9 @@ public class TestCircularArrayQueue {
             {
                 Assertions.assertSame(goodQueue.remove(), queue.dequeue());
             }
-            //using different asserts, such as assertEquals, can clarify your intent to people reading your code
-            //technically, when using assertEquals, you're supposed to put the expected value first, then the actual value
             Assertions.assertEquals(goodQueue.isEmpty(), queue.isEmpty());
         }
 
-        //now that we're done going through n operations, dequeue until empty and compare results
         while (!queue.isEmpty()) {
             Assertions.assertFalse(goodQueue.isEmpty());
             Assertions.assertSame(goodQueue.remove(), queue.dequeue());
