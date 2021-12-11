@@ -3,12 +3,12 @@ package collections.exceptions;
 /**
  * Throws exception when element in question must be instanced of {@link Comparable} but isn't.
  */
-public class NotComparableInstance extends Exception {
-    public NotComparableInstance() {
+public class NotComparableInstanceException extends Exception {
+    public NotComparableInstanceException() {
         super();
     }
 
-    public NotComparableInstance(String s) {
+    public NotComparableInstanceException(String s) {
         super(s);
     }
 }

@@ -1,7 +1,7 @@
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import collections.exceptions.NotComparableInstance;
+import collections.exceptions.NotComparableInstanceException;
 import collections.implementation.DoubleLinkedOrderedList;
 import collections.interfaces.OrderedListADT;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +35,7 @@ public class TestIteratorOrdered {
             list.add(2);
             list.add(3);
             list.add(4);
-        } catch (NotComparableInstance ex) {
+        } catch (NotComparableInstanceException ex) {
         }
         iterator = list.iterator();
 
@@ -83,7 +83,7 @@ public class TestIteratorOrdered {
             list.add(3);
             list.add(2000);
             list.add(-2000);
-        } catch (NotComparableInstance ex) {
+        } catch (NotComparableInstanceException ex) {
         }
         iterator = list.iterator();
 
@@ -108,7 +108,7 @@ public class TestIteratorOrdered {
             list.add(2);
             list.add(3);
             list.add(4);
-        } catch (NotComparableInstance ex) {
+        } catch (NotComparableInstanceException ex) {
         }
         iterator = list.iterator();
 
@@ -135,7 +135,7 @@ public class TestIteratorOrdered {
     public void removeBeforeNext() {
         try {
             list.add(0);
-        } catch (NotComparableInstance ex) {
+        } catch (NotComparableInstanceException ex) {
         }
         iterator = list.iterator();
 
@@ -153,7 +153,7 @@ public class TestIteratorOrdered {
             list.add(3);
             list.add(4);
             list.add(5);
-        } catch (NotComparableInstance ex) {
+        } catch (NotComparableInstanceException ex) {
         }
         iterator = list.iterator();
 

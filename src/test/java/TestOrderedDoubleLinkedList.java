@@ -1,7 +1,7 @@
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import collections.exceptions.NotComparableInstance;
+import collections.exceptions.NotComparableInstanceException;
 import collections.implementation.DoubleLinkedOrderedList;
 import collections.interfaces.OrderedListADT;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +20,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void isEmpty() throws NotComparableInstance {
+    public void isEmpty() throws NotComparableInstanceException {
         assertTrue(strList.isEmpty());
         strList.add(1);
         assertFalse(strList.isEmpty());
@@ -34,7 +34,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void size() throws NotComparableInstance {
+    public void size() throws NotComparableInstanceException {
         assertEquals(0, strList.size());
         strList.add(1);
         assertEquals(1, strList.size());
@@ -47,7 +47,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void clear() throws NotComparableInstance {
+    public void clear() throws NotComparableInstanceException {
         strList.add(1);
         strList.add(2);
         strList.add(3);
@@ -72,7 +72,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void remove() throws NotComparableInstance {
+    public void remove() throws NotComparableInstanceException {
         strList.add(0);
         strList.add(1);
         strList.add(2);
@@ -103,7 +103,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void orderedAdd() throws NotComparableInstance {
+    public void orderedAdd() throws NotComparableInstanceException {
         strList.add(1);
         strList.add(5);
         strList.add(10);
@@ -124,7 +124,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void contains() throws NotComparableInstance {
+    public void contains() throws NotComparableInstanceException {
         strList.add(1);
         strList.add(2);
         strList.add(3);
@@ -142,7 +142,7 @@ class TestOrderedDoubleLinkedList {
     }
 
     @Test
-    public void getFirstAndLast() throws NotComparableInstance {
+    public void getFirstAndLast() throws NotComparableInstanceException {
         strList.add(0);
         strList.add(1);
         strList.add(2);

@@ -1,6 +1,6 @@
 package collections.interfaces;
 
-import collections.exceptions.NotComparableInstance;
+import collections.exceptions.NotComparableInstanceException;
 
 public interface OrderedListADT<T> extends ListADT<T> {
     /**
@@ -9,5 +9,5 @@ public interface OrderedListADT<T> extends ListADT<T> {
      *
      * @param element the element to be added to this list
      */
-    public void add(T element) throws NotComparableInstance;
+    public void add(T element) throws NotComparableInstanceException;
 }

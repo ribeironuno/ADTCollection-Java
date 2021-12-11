@@ -1,8 +1,5 @@
-import static org.junit.jupiter.api.Assertions.*;
-
-import collections.exceptions.NotComparableInstance;
+import collections.exceptions.NotComparableInstanceException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +24,7 @@ public class TestLinkedList {
     }
 
     @Test
-    public void testAddElement() throws NotComparableInstance {
+    public void testAddElement() throws NotComparableInstanceException {
         int count = 0;
         Assertions.assertEquals(count++, list.size());
         list.add(2);

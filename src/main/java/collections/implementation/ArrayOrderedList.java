@@ -1,6 +1,6 @@
 package collections.implementation;
 
-import collections.exceptions.NotComparableInstance;
+import collections.exceptions.NotComparableInstanceException;
 import collections.interfaces.OrderedListADT;
 
 public class ArrayOrderedList<T> extends ArrayList<T> implements OrderedListADT<T> {
@@ -23,9 +23,9 @@ public class ArrayOrderedList<T> extends ArrayList<T> implements OrderedListADT<
 
     @Override
     @SuppressWarnings("unchecked")
-    public void add(T element) throws NotComparableInstance {
+    public void add(T element) throws NotComparableInstanceException {
         if (!(element instanceof Comparable)) {
-            throw new NotComparableInstance("Element must be comparable");
+            throw new NotComparableInstanceException("Element must be comparable");
         }
         if (super.size == super.array.length) {
             super.expand();
