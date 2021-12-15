@@ -44,6 +44,15 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         this.tree[0] = element;
     }
 
+    @SuppressWarnings("unchecked")
+    protected void expandCapacity() {
+        T[] tmp = (T[]) (new Object[this.count * 2]);
+        for (int i = 0; i < this.count; i++) {
+            tmp[i] = this.tree[i];
+        }
+        tree = tmp;
+    }
+
     @Override
     public T getRoot() {
         return this.count == 0 ? null : this.tree[0];
@@ -71,19 +80,31 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
 
     @Override
     public T find(T targetElement) throws ElementNotFoundException {
-        T temp = null;
+        if (this.count == 0) {
+            throw new ElementNotFoundException("binary tree");
+        }
+        T result = null;
         boolean found = false;
 
-        for (int i = 0; i < this.count && !found; i++) {
-            if (targetElement.equals(tree[i])) {
+        Comparable<T> comparable = (Comparable<T>) targetElement;
+        int current = 0;
+
+        while (tree[current] != null && !found) {
+
+            if (comparable.compareTo(tree[current]) == 0) {
+                result = tree[current];
                 found = true;
-                temp = tree[i];
+            } else if (comparable.compareTo(tree[current]) < 0) {
+                current = leftSideIndex(current);
+            } else {
+                current = rightSideIndex(current);
             }
         }
+
         if (!found) {
             throw new ElementNotFoundException("Binary tree");
         } else {
-            return temp;
+            return result;
         }
     }
 
@@ -93,7 +114,7 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
      * @param node index of node
      * @return left element index
      */
-    private int leftSideIndex(int node) {
+    protected int leftSideIndex(int node) {
         return (2 * node) + 1;
     }
 
@@ -103,7 +124,7 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
      * @param node index of node
      * @return right element index
      */
-    private int rightSideIndex(int node) {
+    protected int rightSideIndex(int node) {
         return 2 * (node + 1);
     }
 
@@ -114,10 +135,12 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
      * @param templist the temporary list used in the traversal
      */
     protected void inOrder(int node, ArrayUnorderedList<T> templist) {
-        if (tree[node] != null) {
-            this.inOrder(this.leftSideIndex(node), templist);
-            templist.addToRear(tree[node]);
-            this.inOrder(this.rightSideIndex(node), templist);
+        if (node < tree.length) {
+            if (tree[node] != null) {
+                this.inOrder(this.leftSideIndex(node), templist);
+                templist.addToRear(tree[node]);
+                this.inOrder(this.rightSideIndex(node), templist);
+            }
         }
     }
 
@@ -135,10 +158,12 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
      * @param templist the temporary list used in the traversal
      */
     protected void preOrder(int node, ArrayUnorderedList<T> templist) {
-        if (tree[node] != null) {
-            templist.addToRear(tree[node]);
-            this.inOrder(this.leftSideIndex(node), templist);
-            this.inOrder(this.rightSideIndex(node), templist);
+        if (node < tree.length) {
+            if (tree[node] != null) {
+                templist.addToRear(tree[node]);
+                this.inOrder(this.leftSideIndex(node), templist);
+                this.inOrder(this.rightSideIndex(node), templist);
+            }
         }
     }
 
@@ -156,10 +181,12 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
      * @param templist the temporary list used in the traversal
      */
     protected void postOrder(int node, ArrayUnorderedList<T> templist) {
-        if (tree[node] != null) {
-            this.inOrder(this.leftSideIndex(node), templist);
-            this.inOrder(this.rightSideIndex(node), templist);
-            templist.addToRear(tree[node]);
+        if (node < tree.length) {
+            if (tree[node] != null) {
+                this.inOrder(this.leftSideIndex(node), templist);
+                this.inOrder(this.rightSideIndex(node), templist);
+                templist.addToRear(tree[node]);
+            }
         }
     }
 
@@ -173,9 +200,22 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
     @Override
     public Iterator<T> iteratorLevelOrder() {
         ArrayUnorderedList<T> results = new ArrayUnorderedList<>(this.count);
+        QueueADT<Integer> nodes = new CircularArrayQueue<>(this.count);
 
-        for (int i = 0; i < this.count; i++) {
-            results.addToRear(tree[i]);
+        nodes.enqueue(0);
+        while (!nodes.isEmpty()) {
+            Integer current = nodes.dequeue();
+
+            //If its last
+            if (this.tree[current] != null) {
+                results.addToRear(tree[current]);
+                if (leftSideIndex(current) < tree.length) {
+                    nodes.enqueue(leftSideIndex(current));
+                }
+                if (rightSideIndex(current) < tree.length) {
+                    nodes.enqueue(rightSideIndex(current));
+                }
+            }
         }
 
         return results.iterator();

@@ -26,10 +26,12 @@ public class BinaryTreeNode<T> {
      */
     public int numChildren() {
         int children = 0;
-        if (left != null)
+        if (left != null) {
             children = 1 + left.numChildren();
-        if (right != null)
+        }
+        if (right != null) {
             children = children + 1 + right.numChildren();
+        }
         return children;
     }
 }

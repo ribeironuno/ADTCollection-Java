@@ -162,7 +162,7 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
 
     @Override
     public Iterator<T> iteratorLevelOrder() {
-        QueueADT<BinaryTreeNode<T>> nodes = new CircularArrayQueue<>(this.count);
+        QueueADT<BinaryTreeNode<T>> nodes = new LinkedQueue<>();
         ArrayUnorderedList<T> results = new ArrayUnorderedList<>(this.count);
 
         nodes.enqueue(this.root);
@@ -170,12 +170,16 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
         BinaryTreeNode<T> current;
         while (!nodes.isEmpty()) {
             current = nodes.dequeue();
-            if (current != null) {
-                results.addToRear(current.element);
+            results.addToRear(current.element);
+
+            if (current.left != null) {
                 nodes.enqueue(current.left);
+            }
+            if (current.right != null) {
                 nodes.enqueue(current.right);
             }
         }
         return results.iterator();
     }
 }
+
